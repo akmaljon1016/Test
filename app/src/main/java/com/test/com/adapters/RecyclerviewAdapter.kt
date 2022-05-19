@@ -30,7 +30,7 @@ class RecyclerviewAdapter(val context: Context) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val product = getItem(position)
-        Glide.with(holder.itemView).load(product.photoUrl).into(holder.binding.imgProduct)
+        Glide.with(holder.itemView).load(product.photoUrl).placeholder(R.drawable.ic_baseline_downloading_24).into(holder.binding.imgProduct)
         holder.binding.txtProductId.setText(context.getString(R.string.id) + "\n" + product.id)
         holder.binding.txtProductName.setText(context.getString(R.string.name) + "\n" + product.name)
         holder.binding.txtDescription.setText(context.getString(R.string.description) + "\n" + product.description)

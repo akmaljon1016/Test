@@ -1,11 +1,8 @@
 package com.test.com.fragments.detailedview
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -20,7 +17,7 @@ class DetailedViewFragment : Fragment(R.layout.fragment_detailed_view) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Glide.with(this).load(args.product.photoUrl).into(binding.imgProduct)
+        Glide.with(this).load(args.product.photoUrl).placeholder(R.drawable.ic_baseline_downloading_24).into(binding.imgProduct)
         binding.txtProductId.setText(requireContext().getString(R.string.id) + "\n" + args.product.id)
         binding.txtProductName.setText(requireContext().getString(R.string.name) + "\n" + args.product.name)
         binding.txtDescription.setText(requireContext().getString(R.string.description) + "\n" + args.product.description)

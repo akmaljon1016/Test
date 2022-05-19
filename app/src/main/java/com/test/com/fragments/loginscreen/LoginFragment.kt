@@ -32,13 +32,14 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (!sharedPreferences.readBearerToken().isNullOrEmpty()){
+        if (!sharedPreferences.readBearerToken().isNullOrEmpty()) {
             findNavController().navigate(R.id.action_loginFragment_to_productFragment)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.btnLogin.setOnClickListener {
             if (binding.editLogin.text.isNullOrEmpty()) {
                 binding.editLoginLayout.hintTextColor =
@@ -51,6 +52,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                     Login(binding.editLogin.text.toString(), binding.editPassword.text.toString())
                 lifecycleScope.launch {
                     loginViewModel.login(login)
+                    binding.progressbar.visibility = View.VISIBLE
                 }
             }
         }
@@ -63,12 +65,15 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                     alertDialog.setTitle("Xatolik")
                     alertDialog.setMessage(it.message.toString())
                     alertDialog.show()
+                    binding.progressbar.visibility = View.GONE
                 }
                 is NetworkResult.Loading -> {
-
+                    binding.progressbar.visibility = View.VISIBLE
                 }
                 is NetworkResult.Success -> {
+                    binding.progressbar.visibility = View.GONE
                     it.data?.let { it1 -> sharedPreferences.saveBearerToken(it1.token) }
+                    findNavController().navigate(R.id.action_loginFragment_to_productFragment)
                 }
             }
         }

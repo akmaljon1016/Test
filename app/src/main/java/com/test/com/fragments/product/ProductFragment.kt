@@ -18,9 +18,12 @@ import com.test.com.base.BaseFragment
 import com.test.com.databinding.FragmentLoginBinding
 import com.test.com.databinding.FragmentProductBinding
 import com.test.com.models.ProductsItem
+import com.test.com.util.Constants
 import com.test.com.util.NetworkResult
+import com.test.com.util.Preferences
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -29,6 +32,12 @@ class ProductFragment : BaseFragment(R.layout.fragment_product) {
     private val binding: FragmentProductBinding by viewBinding(FragmentProductBinding::bind)
     val productViewModel by viewModels<ProductViewModel>()
     lateinit var recyclerviewAdapter: RecyclerviewAdapter
+    @Inject
+    lateinit var sharedPreferences: Preferences
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Constants.TOKEN_FOR_NETWORKING=sharedPreferences.readBearerToken()
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerviewAdapter = RecyclerviewAdapter(requireContext())
